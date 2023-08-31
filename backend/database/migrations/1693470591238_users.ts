@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
     public async up() {
         this.schema.createTable(this.tableName, (table) => {
-            table.uuid('id', { primaryKey: true })
+            table.uuid('id', { primaryKey: true }).defaultTo(this.raw('uuid_generate_v4()'))
             table.uuid('role_id').notNullable().references('id').inTable('roles').onDelete('CASCADE')
             table.string('email').notNullable().unique()
             table.string('password').notNullable()
