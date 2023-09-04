@@ -11,14 +11,14 @@ export default class extends BaseSeeder {
                .from('roles')
                .where('name', 'admin').first().then((role) => role.id),
             email: 'admin@pukamiami.com',
-            password: '123',
+            password: '123456',
          },
          {
             role_id: await Database
                .from('roles')
                .where('name', 'user').first().then((role) => role.id),
             email: 'user@mail.com',
-            password: '123',
+            password: '123456',
          },
       ])
    }

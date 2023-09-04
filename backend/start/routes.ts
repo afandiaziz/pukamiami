@@ -24,4 +24,13 @@ Route.get('/', async () => {
    return { hello: 'world' }
 })
 
+Route.group(() => {
+   Route.group(() => {
+      Route.post('/login', 'AuthController.login')
+      Route.post('/register', 'AuthController.register')
+      Route.get('/logout', 'AuthController.logout')
+   })
+
+}).prefix('/api')
+
 Route.get('/users', 'UsersController.index')
