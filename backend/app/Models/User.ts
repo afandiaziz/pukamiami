@@ -29,6 +29,9 @@ export default class User extends BaseModel {
       }
       user.createdAt = DateTime.now().toMillis().toString()
       user.updatedAt = DateTime.now().toMillis().toString()
+      if (!user.role_id) {
+         user.role_id = await Role.findByOrFail('name', 'user').then((role) => role.id)
+      }
    }
 
    @afterFetch()
