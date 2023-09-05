@@ -1,6 +1,7 @@
 import React from "react";
 import Background from "../../assets/Background.svg";
 import logo from "../../assets/logo.svg";
+import Google from "../../assets/Google.svg";
 
 export default function LoginPages() {
   return (
@@ -13,16 +14,17 @@ export default function LoginPages() {
         }}
       >
         <div className="container mx-auto ">
-          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 pt-36 place-items-center">
-            <div className="mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 pt-40 place-items-center">
+            <div className="mx-auto hidden lg:block">
               <img className="w-3/4" src={logo} alt="" />
             </div>
-            <div className="bg-white rounded-lg lg:w-1/2 md:w-1/2">
-              <div className="bg-[#FCAC5A] py-4 rounded-lg">
-                <h1 className=" text-white text-center text-2xl">SIGN IN</h1>
-              </div>
-              <div className="w-full max-w-xs">
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mx-auto lg:w-1/2">
+              <div className="bg-white rounded-lg">
+                <div className="bg-[#FCAC5A] py-4 rounded-lg">
+                  <h1 className=" text-white text-center text-xl">SIGN IN</h1>
+                </div>
+
+                <form className="px-8 pt-6 pb-8 mb-4">
                   <div className="mb-4">
                     <label
                       className="block text-gray-700 text-sm font-bold mb-2"
@@ -45,28 +47,38 @@ export default function LoginPages() {
                       Password
                     </label>
                     <input
-                      className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
                       type="password"
                       placeholder="******************"
                     />
-                    <p className="text-red-500 text-xs italic">Please choose a password.</p>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      type="button"
-                    >
-                      Sign In
-                    </button>
-                    <a
-                      className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                      href="#"
-                    >
-                      Forgot Password?
-                    </a>
-                  </div>
+                  <button class="px-4 w-full py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:bg-gray-200 hover:shadow transition duration-150">
+                    <img
+                      class="w-6 h-6"
+                      src="https://www.svgrepo.com/show/475656/google-color.svg"
+                      loading="lazy"
+                      alt="google logo"
+                    />
+                    <span>Login with Google</span>
+                  </button>
+                  <button
+                    className="mt-3 w-full shadow-lg bg-[#F68C1F] hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                  >
+                    Sign In
+                  </button>
+                  <a
+                    className="flex justify-center blue text-blue-600 hover:text-blue-400"
+                    href="#"
+                  >
+                    Forgot Password?
+                  </a>
                 </form>
+              </div>
+              <div className="text-center">
+                <p>Don’t have an account yet?</p>
+                <a href="#">Create an Account</a>
               </div>
             </div>
           </div>
