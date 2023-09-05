@@ -7,8 +7,14 @@ export default class User extends BaseModel {
    @column({ isPrimary: true })
    public id: string
 
-   @column()
+   @column({ serializeAs: null })
    public role_id: string
+
+   @column()
+   public name: string
+
+   @column()
+   public phone: string
 
    @column()
    public email: string

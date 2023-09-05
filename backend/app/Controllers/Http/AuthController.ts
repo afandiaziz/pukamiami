@@ -26,7 +26,10 @@ export default class AuthController {
       await auth.use('api').attempt(email, password, {
          expiresIn: '30 mins'
       }).then((result) => {
-         return response.ok(result)
+         return response.ok({
+            message: 'success',
+            data: result
+         })
       }).catch(() => {
          return response.unauthorized({
             error: 'Invalid credentials'
