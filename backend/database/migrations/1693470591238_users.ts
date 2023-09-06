@@ -7,13 +7,13 @@ export default class extends BaseSchema {
       this.schema.createTable(this.tableName, (table) => {
          table.uuid('id', { primaryKey: true }).defaultTo(this.raw('uuid_generate_v4()'))
          table.uuid('role_id').notNullable().references('id').inTable('roles').onDelete('CASCADE')
-         table.string('name').nullable()
-         table.string('phone').nullable()
+         table.string('name').notNullable()
+         table.string('phone').notNullable()
          table.string('email').notNullable().unique()
          table.string('password').notNullable()
          table.string('remember_me_token').nullable()
-         table.bigInteger('created_at')
-         table.bigInteger('updated_at')
+         table.string('created_at', 255).notNullable()
+         table.string('updated_at', 255).notNullable()
       })
    }
 

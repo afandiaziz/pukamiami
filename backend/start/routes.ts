@@ -32,7 +32,7 @@ Route.group(() => {
    Route.group(() => {
       Route.get('/logout', 'AuthController.logout')
       Route.get('/profile', 'UsersController.profile')
-      // Route.put('/profile', 'UsersController.updateProfile')
+      Route.put('/profile', 'UsersController.updateProfile')
       // Route.put('/password', 'UsersController.updatePassword')
    }).middleware('auth')
 

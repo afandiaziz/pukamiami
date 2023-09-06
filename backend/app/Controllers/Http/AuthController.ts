@@ -49,9 +49,13 @@ export default class AuthController {
       const req = request.all()
       await request.validate({
          schema: schema.create({
-            // name: schema.string({}, [
-            //    rules.required()
-            // ]),
+            name: schema.string({}, [
+               rules.required()
+            ]),
+            phone: schema.string({}, [
+               rules.mobile(),
+               rules.required()
+            ]),
             email: schema.string({}, [
                rules.email(),
                rules.required(),
@@ -63,17 +67,21 @@ export default class AuthController {
             ]),
             confirm: schema.string({}, [
                rules.required(),
+               rules.minLength(6),
                rules.confirmed('password')
             ])
          }),
          messages: {
-            // 'name.required': 'Nama tidak boleh kosong',
+            'name.required': 'Nama tidak boleh kosong',
+            'phone.required': 'Nomor HP tidak boleh kosong',
+            'phone.mobile': 'Nomor HP tidak valid',
             'email.required': 'Email tidak boleh kosong',
             'email.email': 'Email tidak valid',
             'email.unique': 'Email sudah terdaftar',
             'password.required': 'Password tidak boleh kosong',
             'password.minLength': 'Password minimal 6 karakter',
             'password.confirmed': 'Password tidak sama',
+            'confirm.minLength': 'Konfirmasi password minimal 6 karakter',
             'confirm.required': 'Konfirmasi password tidak boleh kosong',
          }
       })

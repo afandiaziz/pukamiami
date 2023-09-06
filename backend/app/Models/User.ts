@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import Role from 'App/Models/Role'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, BelongsTo, afterFetch, beforeCreate, beforeFetch, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, afterCreate, afterFetch, afterFind, afterSave, afterUpdate, beforeCreate, beforeSave, beforeUpdate, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
    @column({ isPrimary: true })
@@ -40,6 +40,12 @@ export default class User extends BaseModel {
       }
    }
 
+   @beforeUpdate()
+   public static async beforeUpdating(user: User) {
+      user.createdAt = DateTime.fromFormat(user.createdAt, 'yyyy-LL-dd HH:mm:ss').toMillis().toFixed()
+      user.updatedAt = DateTime.now().toMillis().toFixed()
+   }
+
    @afterFetch()
    public static async afterFetched(users: User[]) {
       await Promise.all(users.map((user) => {
@@ -48,6 +54,24 @@ export default class User extends BaseModel {
       }))
    }
 
-   @belongsTo(() => Role)
+   @afterCreate()
+   public static async afterCreating(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @afterUpdate()
+   public static async afterUpdating(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @afterFind()
+   public static async afterFinding(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @belongsTo(() => Role, { foreignKey: 'role_id', localKey: 'id' })
    public role: BelongsTo<typeof Role>
 }
