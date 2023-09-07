@@ -1,26 +1,30 @@
 {
-    "name": "clear",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/afandiaziz/pukamiami-backend.git"
-    },
-    "keywords": [
-        "pukamiami"
-    ],
-    "author": "afandiaziz, fadilaprasetyo",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/afandiaziz/pukamiami-backend/issues"
-    },
-    "homepage": "https://github.com/afandiaziz/pukamiami-backend#readme",
-    "devDependencies": {
-        "concurrently": "^8.2.1"
-    }
+   "name": "clear",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev:backend": "cd backend && npm run dev",
+      "dev:frontend": "cd frontend && npm run dev",
+      "install:backend": "cd backend && yarn install",
+      "install:frontend": "cd frontend && yarn install",
+      "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/afandiaziz/pukamiami-backend.git"
+   },
+   "keywords": [
+      "pukamiami"
+   ],
+   "author": "afandiaziz, fadilaprasetyo",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/afandiaziz/pukamiami-backend/issues"
+   },
+   "homepage": "https://github.com/afandiaziz/pukamiami-backend#readme",
+   "devDependencies": {
+      "concurrently": "^8.2.1"
+   }
 }

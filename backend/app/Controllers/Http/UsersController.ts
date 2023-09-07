@@ -16,11 +16,8 @@ export default class UsersController {
    public async updateProfile({ auth, request, response }: HttpContextContract) {
       await request.validate({
          schema: schema.create({
-            name: schema.string({}, [
-               rules.required()
-            ]),
+            name: schema.string(),
             phone: schema.string({}, [
-               rules.required(),
                rules.mobile()
             ])
          }),
