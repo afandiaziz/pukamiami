@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
 import Role from 'App/Models/Role'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, BelongsTo, afterCreate, afterFetch, afterFind, afterSave, afterUpdate, beforeCreate, beforeSave, beforeUpdate, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, afterCreate, afterFetch, afterFind, afterUpdate, beforeCreate, beforeUpdate, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Address from './Address'
 
 export default class User extends BaseModel {
    @column({ isPrimary: true })
@@ -74,4 +75,7 @@ export default class User extends BaseModel {
 
    @belongsTo(() => Role, { foreignKey: 'role_id', localKey: 'id' })
    public role: BelongsTo<typeof Role>
+
+   @hasMany(() => Address, { foreignKey: 'user_id', localKey: 'id' })
+   public addresses: HasMany<typeof Address>
 }

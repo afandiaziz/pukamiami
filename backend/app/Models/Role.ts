@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import User from 'App/Models/User';
-import { afterCreate, afterFetch, afterFind, afterUpdate, BaseModel, beforeCreate, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { afterCreate, afterFetch, afterFind, afterUpdate, BaseModel, beforeCreate, beforeUpdate, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Role extends BaseModel {
    @column({ isPrimary: true })
@@ -19,6 +19,12 @@ export default class Role extends BaseModel {
    public static beforeCreating(role: Role) {
       role.createdAt = DateTime.now().toMillis().toString()
       role.updatedAt = DateTime.now().toMillis().toString()
+   }
+
+   @beforeUpdate()
+   public static async beforeUpdating(column: Role) {
+      column.createdAt = DateTime.fromFormat(column.createdAt, 'yyyy-LL-dd HH:mm:ss').toMillis().toFixed()
+      column.updatedAt = DateTime.now().toMillis().toFixed()
    }
 
    @afterFetch()

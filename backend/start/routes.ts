@@ -26,16 +26,22 @@ Route.get('/', async () => {
 
 Route.group(() => {
    Route.group(() => {
-      Route.post('/login', 'AuthController.login')
-      Route.post('/register', 'AuthController.register')
+      Route.post('login', 'AuthController.login')
+      Route.post('register', 'AuthController.register')
    })
+
    Route.group(() => {
-      Route.get('/logout', 'AuthController.logout')
-      Route.get('/profile', 'UsersController.profile')
-      Route.put('/profile', 'UsersController.updateProfile')
+      Route.get('logout', 'AuthController.logout')
+      Route.get('profile', 'UsersController.profile')
+      Route.put('profile', 'UsersController.updateProfile')
+
+      Route.group(() => {
+         Route.get('address', 'AddressesController.all')
+         Route.post('address', 'AddressesController.store')
+      }).prefix('/user/')
       // Route.put('/password', 'UsersController.updatePassword')
    }).middleware('auth')
 
-}).prefix('/api')
+}).prefix('/api/')
 
-Route.get('/users', 'UsersController.index')
+// Route.get('/users', 'UsersController.index')
