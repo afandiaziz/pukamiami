@@ -9,11 +9,15 @@ export default class extends BaseSeeder {
          {
             role_id: (await Role.findByOrFail('name', 'admin')).id,
             email: 'admin@pukamiami.com',
+            name: 'Puk Ami Ami',
+            phone: '085777571810',
             password: '123456',
          },
          {
             role_id: (await Role.findByOrFail('name', 'user')).id,
             email: 'user@mail.com',
+            name: 'User 1',
+            phone: '08123456789012',
             password: '123456',
          },
       ])

@@ -1,14 +1,21 @@
 import { DateTime } from 'luxon'
 import Role from 'App/Models/Role'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, BelongsTo, afterFetch, beforeCreate, beforeFetch, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, afterCreate, afterFetch, afterFind, afterUpdate, beforeCreate, beforeUpdate, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Address from './Address'
 
 export default class User extends BaseModel {
    @column({ isPrimary: true })
    public id: string
 
-   @column()
+   @column({ serializeAs: null })
    public role_id: string
+
+   @column()
+   public name: string
+
+   @column()
+   public phone: string
 
    @column()
    public email: string
@@ -34,6 +41,12 @@ export default class User extends BaseModel {
       }
    }
 
+   @beforeUpdate()
+   public static async beforeUpdating(user: User) {
+      user.createdAt = DateTime.fromFormat(user.createdAt, 'yyyy-LL-dd HH:mm:ss').toMillis().toFixed()
+      user.updatedAt = DateTime.now().toMillis().toFixed()
+   }
+
    @afterFetch()
    public static async afterFetched(users: User[]) {
       await Promise.all(users.map((user) => {
@@ -42,6 +55,27 @@ export default class User extends BaseModel {
       }))
    }
 
-   @belongsTo(() => Role)
+   @afterCreate()
+   public static async afterCreating(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @afterUpdate()
+   public static async afterUpdating(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @afterFind()
+   public static async afterFinding(user: User) {
+      user.createdAt = DateTime.fromMillis(parseInt(user.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+      user.updatedAt = DateTime.fromMillis(parseInt(user.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+   }
+
+   @belongsTo(() => Role, { foreignKey: 'role_id', localKey: 'id' })
    public role: BelongsTo<typeof Role>
+
+   @hasMany(() => Address, { foreignKey: 'user_id', localKey: 'id' })
+   public addresses: HasMany<typeof Address>
 }

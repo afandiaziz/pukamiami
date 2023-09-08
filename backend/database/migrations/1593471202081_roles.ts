@@ -14,8 +14,8 @@ export default class extends BaseSchema {
             schemaName: 'public'
          }).defaultTo('user')
          // table.timestamps(false, true)
-         table.bigInteger('created_at')
-         table.bigInteger('updated_at')
+         table.string('created_at', 255).notNullable()
+         table.string('updated_at', 255).notNullable()
          // table.timestamp('updated_at', { useTz: true })
       })
    }
