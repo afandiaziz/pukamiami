@@ -35,18 +35,16 @@ Route.group(() => {
       Route.group(() => {
          Route.get('profile', 'UsersController.profile')
          Route.put('profile', 'UsersController.updateProfile')
+
+         Route.group(() => {
+            Route.get('address', 'AddressesController.all')
+            Route.post('address', 'AddressesController.store')
+            Route.get('address/:id', 'AddressesController.show')
+            Route.put('address/:id', 'AddressesController.update')
+            Route.delete('address/:id', 'AddressesController.destroy')
+
+            Route.put('password', 'UsersController.updatePassword')
+         }).prefix('/user/')
       }).middleware('isUser')
-
-      Route.group(() => {
-         Route.get('address', 'AddressesController.all')
-         Route.post('address', 'AddressesController.store')
-         Route.get('address/:id', 'AddressesController.show')
-         Route.put('address/:id', 'AddressesController.update')
-         Route.delete('address/:id', 'AddressesController.destroy')
-      }).prefix('/user/')
-      // Route.put('/password', 'UsersController.updatePassword')
    }).middleware('auth')
-
 }).prefix('/api/')
-
-// Route.get('/users', 'UsersController.index')

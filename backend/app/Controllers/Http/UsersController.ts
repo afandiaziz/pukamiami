@@ -1,6 +1,7 @@
+import User from 'App/Models/User'
+import Hash from '@ioc:Adonis/Core/Hash'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
 
 export default class UsersController {
    public async profile({ auth, response }: HttpContextContract) {
@@ -47,12 +48,10 @@ export default class UsersController {
       await request.validate({
          schema: schema.create({
             old_password: schema.string({}, [
-               rules.required(),
                rules.minLength(6)
             ]),
             new_password: schema.string({}, [
-               rules.required(),
-               rules.minLength(6)
+               rules.minLength(6),
             ])
          }),
          messages: {
@@ -67,12 +66,11 @@ export default class UsersController {
       const user = await auth.use('api').authenticate()
 
       await auth.use('api').attempt(user.email, old_password)
-      user.password = new_password
+      user.password = await Hash.make(new_password)
       await user.save()
 
       response.ok({
          message: 'success',
-         data: user
       })
    }
 }
