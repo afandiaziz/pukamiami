@@ -32,8 +32,10 @@ Route.group(() => {
 
    Route.group(() => {
       Route.get('logout', 'AuthController.logout')
-      Route.get('profile', 'UsersController.profile')
-      Route.put('profile', 'UsersController.updateProfile')
+      Route.group(() => {
+         Route.get('profile', 'UsersController.profile')
+         Route.put('profile', 'UsersController.updateProfile')
+      }).middleware('isUser')
 
       Route.group(() => {
          Route.get('address', 'AddressesController.all')
