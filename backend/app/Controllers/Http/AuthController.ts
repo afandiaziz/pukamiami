@@ -83,6 +83,8 @@ export default class AuthController {
       await User.create({
          email: req.email,
          password: req.password,
+         phone: req.phone,
+         name: req.name,
       }).then(async (user) => {
          await auth.use('api').attempt(req.email, req.password, {
             expiresIn: '30 mins'
