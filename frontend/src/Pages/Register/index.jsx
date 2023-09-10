@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import Background from "../../assets/Background.svg";
 import logo from "../../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
+import { register } from "../../api/auth";
 
 export default function RegisterPages() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+  });
+
+  const handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.id;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      console.log("tidak sesuai");
+    }
+
+    try {
+      const response = await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   return (
     <>
       <div
@@ -20,21 +63,19 @@ export default function RegisterPages() {
             <div className="mx-auto lg:w-1/2">
               <div className="bg-white rounded-lg">
                 <div className="bg-[#FCAC5A] py-4 rounded-lg">
-                  <h1 className=" text-white text-center text-xl">SIGN IN</h1>
+                  <h1 className=" text-white text-center text-xl">SIGN UP</h1>
                 </div>
-                <form className="px-8 pt-6 pb-8 mb-4">
+                <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="username"
-                    >
-                      Username
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                      Name
                     </label>
                     <input
+                      onChange={handleChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="username"
+                      id="name"
                       type="text"
-                      placeholder="Username"
+                      placeholder="name"
                     />
                   </div>
                   <div className="mb-4">
@@ -42,6 +83,7 @@ export default function RegisterPages() {
                       Email
                     </label>
                     <input
+                      onChange={handleChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
@@ -49,17 +91,14 @@ export default function RegisterPages() {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="phone_number"
-                    >
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                       Phone Number
                     </label>
                     <input
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="phone_number"
+                      id="phone"
                       type="number"
-                      placeholder="phone_number"
+                      placeholder="phone"
                     />
                   </div>
                   <div className="mb-6">
@@ -79,31 +118,22 @@ export default function RegisterPages() {
                   <div className="mb-6">
                     <label
                       className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="confirm_password"
+                      htmlFor="confirmpassword"
                     >
                       Confirm Password
                     </label>
                     <input
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                      id="confirm_password"
+                      id="confirmpassword"
                       type="password"
                       placeholder="******************"
                     />
                   </div>
-                  <button class="px-4 w-full py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:bg-gray-200 hover:shadow transition duration-150">
-                    <img
-                      class="w-6 h-6"
-                      src="https://www.svgrepo.com/show/475656/google-color.svg"
-                      loading="lazy"
-                      alt="google logo"
-                    />
-                    <span>Login with Google</span>
-                  </button>
                   <button
                     className="mt-3 w-full shadow-lg bg-[#F68C1F] hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="button"
+                    type="submit"
                   >
-                    Sign In
+                    Sign Up
                   </button>
                   <a
                     className="flex justify-center blue text-blue-600 hover:text-blue-400"
