@@ -25,10 +25,16 @@ export default class AuthController {
       const { email, password } = request.all()
       await auth.use('api').attempt(email, password, {
          expiresIn: '30 mins'
-      }).then((result) => {
+      }).then(async (result) => {
+         // result.user
+         await result.user.load('role', query => query)
+         // data.toJSON()
+         const data = result.user.toJSON()
+         data.token = result
+
          return response.ok({
             message: 'success',
-            data: result
+            data
          })
       }).catch(() => {
          return response.unauthorized({
@@ -88,11 +94,13 @@ export default class AuthController {
       }).then(async (user) => {
          await auth.use('api').attempt(req.email, req.password, {
             expiresIn: '30 mins'
-         }).then((token) => {
+         }).then(async (token) => {
+            await user.load('role', query => query)
+            const data = user.toJSON()
+            data.token = token
             return response.created({
                message: 'success',
-               data: user,
-               token
+               data,
             })
          }).catch(() => {
             return response.unauthorized({

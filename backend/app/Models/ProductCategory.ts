@@ -15,7 +15,7 @@ export default class ProductCategory extends BaseModel {
 
    @column()
    @slugify({
-      strategy: 'dbIncrement',
+      strategy: 'simple',
       fields: ['name'],
       allowUpdates: true,
    })

@@ -26,25 +26,41 @@ Route.get('/', async () => {
 
 Route.group(() => {
    Route.group(() => {
-      Route.post('login', 'AuthController.login')
-      Route.post('register', 'AuthController.register')
+      Route.post('/login', 'AuthController.login').as('login')
+      Route.post('/register', 'AuthController.register').as('register')
    })
 
    Route.group(() => {
-      Route.get('logout', 'AuthController.logout')
+      Route.get('/logout', 'AuthController.logout').as('logout')
+
       Route.group(() => {
-         Route.get('profile', 'UsersController.profile')
-         Route.put('profile', 'UsersController.updateProfile')
+         Route.get('/profile', 'UsersController.profile').as('getProfile')
+         Route.put('/profile', 'UsersController.updateProfile').as('updateProfile')
 
          Route.group(() => {
-            Route.get('address', 'AddressesController.all')
-            Route.post('address', 'AddressesController.store')
-            Route.get('address/:id', 'AddressesController.show')
-            Route.put('address/:id', 'AddressesController.update')
-            Route.delete('address/:id', 'AddressesController.destroy')
+            Route.group(() => {
+               Route.get('/', 'AddressesController.all').as('index')
+               Route.post('/', 'AddressesController.store').as('store')
+               Route.get('/:id', 'AddressesController.show').as('show')
+               Route.put('/:id', 'AddressesController.update').as('update')
+               Route.delete('/:id', 'AddressesController.destroy').as('destroy')
+            }).prefix('/address').as('address')
 
-            Route.put('password', 'UsersController.updatePassword')
-         }).prefix('/user/')
+            Route.put('/password', 'UsersController.updatePassword').as('updatePassword')
+         }).prefix('/user').as('user')
       }).middleware('isUser')
+
+      Route.group(() => {
+         Route.group(() => {
+            Route.group(() => {
+               Route.get('/', 'ProductCategoriesController.all').as('index')
+               Route.post('/', 'ProductCategoriesController.store').as('store')
+            }).prefix('/categories').as('categories')
+
+
+         }).prefix('/products').as('products')
+
+      }).middleware('isAdmin')
+
    }).middleware('auth')
-}).prefix('/api/')
+}).prefix('/api').as('api')
