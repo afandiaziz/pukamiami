@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -11,21 +11,37 @@ import UserPages from "./Pages/User";
 import { RequireAuth } from "./component/requireAuth";
 import { ROLES } from "./config/roles";
 
+
+
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<LoginPages />} />
-        <Route path="/register" element={<RegisterPages />} />
-        <Route element={<RequireAuth allowedRoles={ROLES.admin} />}>
-          <Route path="admin" element={<AdminPages />} />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={ROLES.user} />}>
-          <Route path="user" element={<UserPages />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
+   // const [token, setToken] = useState(null)
+   // useEffect(() => {
+   //    if (!token) {
+   //       setToken(cookieCutter.get('token'))
+   //    }
+   // }, [token])
+
+   // if (!token) {
+   //    return (
+   //       <Routes>
+   //       </Routes>
+   //    );
+
+   // } else {
+
+   // }
+   return (
+      <Routes>
+         <Route path="/" element={<UserPages />} />
+         <Route path="/login" element={<LoginPages />} />
+         <Route path="/register" element={<RegisterPages />} />
+         {/* <Route element={<RequireAuth allowedRoles={ROLES.admin} />}> */}
+         <Route path="admin" element={<AdminPages />} />
+         {/* </Route> */}
+         {/* <Route element={<RequireAuth allowedRoles={ROLES.user} />}> */}
+         {/* <Route path="user" element={<UserPages />} /> */}
+      </Routes>
+   );
 }
 
 export default App;

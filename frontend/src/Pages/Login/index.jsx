@@ -1,18 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import Background from "../../assets/Background.svg";
 import logo from "../../assets/logo.svg";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { login } from "../../api/auth";
 import { ROLES } from "../../config/roles";
+import cookieCutter from 'cookie-cutter';
 
 export default function LoginPages() {
-  const navigate = useNavigate();
-  const { setAuth } = useAuth();
+   const navigate = useNavigate();
+   useEffect(() => {
+      if (cookieCutter.get('token')) {
+         return navigate("/")
+      }
+   }, [])
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "user@mail.com",
+    password: "123456",
   });
 
   const handleChange = (e) => {
@@ -28,21 +33,19 @@ export default function LoginPages() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await login({
         email: formData.email,
         password: formData.password,
-      });
-      const { email, name, token, role } = response.data.data;
-      const user = { email, name, token, role };
+      })
 
-      setAuth(user);
-
-      if (role.name == ROLES.user) return navigate("/user");
-
+      const {role, token} = response.data.data;
+      cookieCutter.set('token', token.token);
+      if (role.name == ROLES.user) return navigate("/");
       if (role.name == ROLES.admin) return navigate("/admin");
-      setTimeout(() => {}, 3000);
+      console.log(user)
+      // setAuth(user);
+   //    setTimeout(() => {}, 3000);
     } catch (err) {
       console.log(err.response);
     }
@@ -78,6 +81,7 @@ export default function LoginPages() {
                       id="email"
                       type="email"
                       placeholder="email@gmail.com"
+                      value="user@mail.com"
                       onChange={handleChange}
                       required
                     />
@@ -94,6 +98,7 @@ export default function LoginPages() {
                       id="password"
                       type="password"
                       placeholder="******************"
+                      value={123456}
                       onChange={handleChange}
                       required
                     />

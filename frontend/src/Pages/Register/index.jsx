@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../../assets/Background.svg";
 import logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api/auth";
+import cookieCutter from 'cookie-cutter';
 
 export default function RegisterPages() {
   const navigate = useNavigate();
+  useEffect(() => {
+     if (cookieCutter.get('token')) {
+        return navigate("/")
+     }
+  }, [])
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
