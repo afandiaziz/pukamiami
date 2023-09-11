@@ -55,6 +55,9 @@ Route.group(() => {
             Route.group(() => {
                Route.get('/', 'ProductCategoriesController.all').as('index')
                Route.post('/', 'ProductCategoriesController.store').as('store')
+               Route.get('/:id', 'ProductCategoriesController.show').as('show')
+               Route.put('/:id', 'ProductCategoriesController.update').as('update')
+               Route.delete('/:id', 'ProductCategoriesController.destroy').as('destroy')
             }).prefix('/categories').as('categories')
 
 

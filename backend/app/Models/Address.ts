@@ -19,7 +19,7 @@ export default class Address extends BaseModel {
    public address: string
 
    @column()
-   public note: string
+   public note: any
 
    @column()
    public createdAt: string

@@ -1,14 +1,14 @@
 import User from './User'
 import { DateTime } from 'luxon'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
-import { afterCreate, afterFetch, afterFind, afterUpdate, BaseModel, beforeCreate, beforeUpdate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { afterCreate, afterFetch, afterFind, afterUpdate, BaseModel, beforeCreate, beforeFetch, beforeUpdate, BelongsTo, belongsTo, column, HasMany, hasMany, hasManyThrough, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProductCategory extends BaseModel {
    @column({ isPrimary: true })
    public id: string
 
    @column({ serializeAs: null })
-   public parent_id: string
+   public parent_id: any
 
    @column()
    public name: string
@@ -74,4 +74,11 @@ export default class ProductCategory extends BaseModel {
    @belongsTo(() => User, { foreignKey: 'user_id', localKey: 'id' })
    public user: BelongsTo<typeof User>
 
+   @hasMany(() => ProductCategory, {
+      foreignKey: 'parent_id', localKey: 'id',
+   },)
+   public children: HasMany<typeof ProductCategory>
+
+   @belongsTo(() => ProductCategory, { foreignKey: 'parent_id', localKey: 'id' })
+   public parent: BelongsTo<typeof ProductCategory>
 }
