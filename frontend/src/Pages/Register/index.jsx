@@ -10,7 +10,7 @@ export default function RegisterPages() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm: "",
     phone: "",
   });
 
@@ -27,7 +27,7 @@ export default function RegisterPages() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm) {
       console.log("tidak sesuai");
     }
 
@@ -36,6 +36,7 @@ export default function RegisterPages() {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        confirm: formData.confirm,
         phone: formData.phone,
       });
       setTimeout(() => {
@@ -52,7 +53,7 @@ export default function RegisterPages() {
         className="w-full h-screen bg-no-repeat"
         style={{
           backgroundImage: `url(${Background})`,
-          backgroundSize: "100%",
+          backgroundSize: "cover",
         }}
       >
         <div className="container mx-auto ">
@@ -95,6 +96,7 @@ export default function RegisterPages() {
                       Phone Number
                     </label>
                     <input
+                      onChange={handleChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="phone"
                       type="number"
@@ -109,6 +111,7 @@ export default function RegisterPages() {
                       Password
                     </label>
                     <input
+                      onChange={handleChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
                       type="password"
@@ -116,15 +119,13 @@ export default function RegisterPages() {
                     />
                   </div>
                   <div className="mb-6">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="confirmpassword"
-                    >
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirm">
                       Confirm Password
                     </label>
                     <input
+                      onChange={handleChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                      id="confirmpassword"
+                      id="confirm"
                       type="password"
                       placeholder="******************"
                     />
@@ -137,9 +138,9 @@ export default function RegisterPages() {
                   </button>
                   <a
                     className="flex justify-center blue text-blue-600 hover:text-blue-400"
-                    href="#"
+                    href="/login"
                   >
-                    Forgot Password?
+                    Sudah Memiliki Akun?
                   </a>
                 </form>
               </div>

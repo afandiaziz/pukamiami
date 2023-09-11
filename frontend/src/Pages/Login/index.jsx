@@ -39,11 +39,10 @@ export default function LoginPages() {
 
       setAuth(user);
 
-      setTimeout(() => {
-        if (role == ROLES.user) return navigate("/user");
+      if (role.name == ROLES.user) return navigate("/user");
 
-        if (role == ROLES.admin) return navigate("/admin");
-      }, 3000);
+      if (role.name == ROLES.admin) return navigate("/admin");
+      setTimeout(() => {}, 3000);
     } catch (err) {
       console.log(err.response);
     }

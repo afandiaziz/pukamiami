@@ -9,6 +9,7 @@ import { Layout } from "./component/layout";
 import AdminPages from "./Pages/Admin";
 import UserPages from "./Pages/User";
 import { RequireAuth } from "./component/requireAuth";
+import { ROLES } from "./config/roles";
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path="/login" element={<LoginPages />} />
         <Route path="/register" element={<RegisterPages />} />
-        <Route element={<RequireAuth />}>
-          <Route path="/admin" element={<AdminPages />} />
-          <Route path="/user" element={<UserPages />} />
+        <Route element={<RequireAuth allowedRoles={ROLES.admin} />}>
+          <Route path="admin" element={<AdminPages />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={ROLES.user} />}>
+          <Route path="user" element={<UserPages />} />
         </Route>
       </Route>
     </Routes>
