@@ -74,9 +74,7 @@ export default class ProductCategory extends BaseModel {
    @belongsTo(() => User, { foreignKey: 'user_id', localKey: 'id' })
    public user: BelongsTo<typeof User>
 
-   @hasMany(() => ProductCategory, {
-      foreignKey: 'parent_id', localKey: 'id',
-   },)
+   @hasMany(() => ProductCategory, { foreignKey: 'parent_id', localKey: 'id' })
    public children: HasMany<typeof ProductCategory>
 
    @belongsTo(() => ProductCategory, { foreignKey: 'parent_id', localKey: 'id' })

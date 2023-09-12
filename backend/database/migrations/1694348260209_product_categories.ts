@@ -7,7 +7,7 @@ export default class extends BaseSchema {
       this.schema.createTable(this.tableName, (table) => {
          table.uuid('id', { primaryKey: true }).defaultTo(this.raw('uuid_generate_v4()'))
          table.uuid('parent_id').nullable().references('id').inTable('product_categories').onDelete('CASCADE')
-         table.string('name').notNullable()
+         table.string('name').notNullable().unique()
          table.string('slug').notNullable().unique()
          table.text('icon').nullable()
          table.text('image').nullable()
