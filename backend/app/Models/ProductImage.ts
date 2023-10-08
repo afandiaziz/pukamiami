@@ -31,15 +31,6 @@ export default class ProductImage extends BaseModel {
         column.updatedAt = DateTime.now().toMillis().toFixed()
     }
 
-    @afterFetch()
-    public static async afterFetched(rows: ProductImage[]) {
-        await Promise.all(rows.map((column) => {
-            column.image = `/uploads/${column.image}`
-            column.createdAt = DateTime.fromMillis(parseInt(column.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
-            column.updatedAt = DateTime.fromMillis(parseInt(column.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
-        }))
-    }
-
     @afterCreate()
     public static async afterCreating(column: ProductImage) {
         column.createdAt = DateTime.fromMillis(parseInt(column.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
@@ -52,9 +43,40 @@ export default class ProductImage extends BaseModel {
         column.updatedAt = DateTime.fromMillis(parseInt(column.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
     }
 
+    @afterFetch()
+    public static async afterFetched(rows: ProductImage[]) {
+        await Promise.all(rows.map((column) => {
+            const isValidUrl = urlString => {
+                var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+                    '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+                    '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+                    '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+                return !!urlPattern.test(urlString);
+            }
+            if (!isValidUrl(column.image))
+                column.image = `http://${process.env.HOST}:${process.env.PORT}/uploads/${column.image}`
+
+            column.createdAt = DateTime.fromMillis(parseInt(column.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+            column.updatedAt = DateTime.fromMillis(parseInt(column.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
+        }))
+    }
+
     @afterFind()
     public static async afterFinding(column: ProductImage) {
-        column.image = `/uploads/${column.image}`
+        const isValidUrl = urlString => {
+            var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+                '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+            return !!urlPattern.test(urlString);
+        }
+        if (!isValidUrl(column.image))
+            column.image = `http://${process.env.HOST}:${process.env.PORT}/uploads/${column.image}`
+
         column.createdAt = DateTime.fromMillis(parseInt(column.createdAt)).toFormat('yyyy-LL-dd HH:mm:ss')
         column.updatedAt = DateTime.fromMillis(parseInt(column.updatedAt)).toFormat('yyyy-LL-dd HH:mm:ss')
     }

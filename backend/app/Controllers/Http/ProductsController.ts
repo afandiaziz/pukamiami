@@ -94,7 +94,7 @@ export default class Products {
         })
 
         await Product.create(request.body()).then(async (data) => {
-            let fileNames: object[] = []
+            let fileNames: Object[] = []
             for (let image of request.files('images')) {
                 const fileName: string = `${Date.now()}.${image.extname}`
                 fileNames.push({
