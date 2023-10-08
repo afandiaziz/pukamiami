@@ -8,6 +8,8 @@ export default class extends BaseSchema {
          table.uuid('id', { primaryKey: true }).defaultTo(this.raw('uuid_generate_v4()'))
          table.uuid('product_id').nullable().references('id').inTable('products').onDelete('CASCADE')
          table.string('image', 255).notNullable().unique()
+         table.string('created_at', 255).notNullable()
+         table.string('updated_at', 255).notNullable()
       })
    }
 
