@@ -10,7 +10,7 @@ export default class extends BaseSeeder {
     public async run() {
         let productData: Product[] = [];
         (await ProductCategory.all()).forEach(async (category) => {
-            for (let index = 1; index <= faker.number.int({ min: 1, max: 1 }); index++) {
+            for (let index = 1; index <= faker.number.int({ min: 4, max: 10 }); index++) {
                 await ProductFactory.make().then((product: Product) => {
                     product.product_category_id = category.id
                     productData.push(product)

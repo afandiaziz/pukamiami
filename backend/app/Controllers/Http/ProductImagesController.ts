@@ -27,7 +27,7 @@ export default class ProductImagesController {
             })
         }).catch(() => {
             return response.status(404).json({
-                message: 'failed'
+                message: 'data tidak ditemukan'
             })
         })
     }
@@ -109,7 +109,7 @@ export default class ProductImagesController {
                     })
                 }).catch(() => {
                     return response.status(404).json({
-                        message: 'failed'
+                        message: 'data tidak ditemukan'
                     })
                 })
             }).catch(() => {
@@ -134,7 +134,7 @@ export default class ProductImagesController {
                 })
             }).catch(() => {
                 return response.status(404).json({
-                    message: 'failed'
+                    message: 'data tidak ditemukan'
                 })
             })
         }
@@ -153,7 +153,7 @@ export default class ProductImagesController {
             })
         }).catch(() => {
             return response.status(404).json({
-                message: 'failed'
+                message: 'data tidak ditemukan'
             })
         })
     }

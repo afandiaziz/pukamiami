@@ -44,7 +44,7 @@ export default class Products {
             })
         }).catch(() => {
             return response.status(404).json({
-                message: 'failed'
+                message: 'data tidak ditemukan'
             })
         })
     }
@@ -142,7 +142,7 @@ export default class Products {
     public async update({ request, response, params }: HttpContextContract) {
         const currentData: Product = await Product.query().where('id', params.id).firstOrFail().then(currentData => currentData).catch(() => {
             return response.status(404).json({
-                message: 'failed'
+                message: 'data tidak ditemukan'
             })
         })
 
@@ -243,7 +243,7 @@ export default class Products {
             })
         }).catch(() => {
             return response.status(404).json({
-                message: 'failed'
+                message: 'data tidak ditemukan'
             })
         })
     }
