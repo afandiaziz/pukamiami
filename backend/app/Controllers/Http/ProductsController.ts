@@ -7,7 +7,7 @@ import ProductImage from 'App/Models/ProductImage'
 
 export default class Products {
     public async all({ response, request }: HttpContextContract) {
-        const { product_category_id, status } = request.all()
+        const { product_category_id, status, } = request.all()
         const data = await Product.query().where((query) => {
             if (product_category_id) {
                 query.where('product_category_id', product_category_id)
@@ -18,12 +18,12 @@ export default class Products {
             if (status) {
                 query.where('status', status)
             }
-        }).preload('category').preload('images').orderBy('created_at', 'desc')
-
-        return response.status(200).json({
-            message: 'success',
-            data
+        }).preload('category').preload('images').orderBy('created_at', 'desc').paginate(request.input('page', 1), request.input('limit', 50)).then((data) => {
+            return data.toJSON()
         })
+
+        data.message = 'success'
+        return response.status(200).json(data)
     }
 
     public async show({ response, params }: HttpContextContract) {
