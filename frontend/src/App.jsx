@@ -10,38 +10,43 @@ import AdminPages from "./Pages/Admin";
 import UserPages from "./Pages/User";
 import { RequireAuth } from "./component/requireAuth";
 import { ROLES } from "./config/roles";
-
-
+import Sidebar from "./component/ui/sidebar";
+import Product from "./component/admin/product";
+import Category from "./component/admin/category";
 
 function App() {
-   // const [token, setToken] = useState(null)
-   // useEffect(() => {
-   //    if (!token) {
-   //       setToken(cookieCutter.get('token'))
-   //    }
-   // }, [token])
+  // const [token, setToken] = useState(null)
+  // useEffect(() => {
+  //    if (!token) {
+  //       setToken(cookieCutter.get('token'))
+  //    }
+  // }, [token])
 
-   // if (!token) {
-   //    return (
-   //       <Routes>
-   //       </Routes>
-   //    );
+  // if (!token) {
+  //    return (
+  //       <Routes>
+  //       </Routes>
+  //    );
 
-   // } else {
+  // } else {
 
-   // }
-   return (
-      <Routes>
-         <Route path="/" element={<UserPages />} />
-         <Route path="/login" element={<LoginPages />} />
-         <Route path="/register" element={<RegisterPages />} />
-         {/* <Route element={<RequireAuth allowedRoles={ROLES.admin} />}> */}
-         <Route path="admin" element={<AdminPages />} />
-         {/* </Route> */}
-         {/* <Route element={<RequireAuth allowedRoles={ROLES.user} />}> */}
-         {/* <Route path="user" element={<UserPages />} /> */}
-      </Routes>
-   );
+  // }
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPages />} />
+      <Route path="/register" element={<RegisterPages />} />
+      {/* <Route element={<RequireAuth allowedRoles={ROLES.admin} />}> */}
+      {/* </Route> */}
+      {/* <Route element={<RequireAuth allowedRoles={ROLES.user} />}> */}
+      {/* <Route path="user" element={<UserPages />} /> */}
+      <Route path="/user" element={<UserPages />} />
+      <Route element={<RequireAuth />}>
+        <Route path="/admin" element={<AdminPages />} />
+        <Route path="/admin/product" element={<Product />} />
+        <Route path="/admin/category" element={<Category />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

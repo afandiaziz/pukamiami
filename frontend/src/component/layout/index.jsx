@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Sidebar from "../ui/sidebar";
 
 export const Layout = () => {
   return (
-    <main className="app">
+    <Sidebar>
       <Outlet />
-    </main>
+    </Sidebar>
   );
 };
