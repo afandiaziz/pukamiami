@@ -32,11 +32,10 @@ Route.group(() => {
 
     Route.group(() => {
         Route.get('/logout', 'AuthController.logout').as('logout')
+        Route.get('/profile', 'UsersController.profile').as('getProfile')
+        Route.put('/profile', 'UsersController.updateProfile').as('updateProfile')
 
         Route.group(() => {
-            Route.get('/profile', 'UsersController.profile').as('getProfile')
-            Route.put('/profile', 'UsersController.updateProfile').as('updateProfile')
-
             Route.group(() => {
                 Route.group(() => {
                     Route.get('/', 'AddressesController.all').as('index')
@@ -54,7 +53,6 @@ Route.group(() => {
         Route.group(() => {
             Route.group(() => {
                 Route.group(() => {
-                    Route.get('/', 'ProductCategoriesController.all').as('index')
                     Route.post('/', 'ProductCategoriesController.store').as('store')
                     Route.get('/:id', 'ProductCategoriesController.show').as('show')
                     Route.put('/:id', 'ProductCategoriesController.update').as('update')
@@ -86,5 +84,9 @@ Route.group(() => {
         Route.get('/', 'ProductsController.all').as('index')
         Route.get('/slug/:slug', 'ProductsController.show').as('show.bySlug')
     }).prefix('/products').as('products')
+
+    Route.group(() => {
+        Route.get('/', 'ProductCategoriesController.all').as('index')
+    }).prefix('/categories').as('categories')
 
 }).prefix('/api').as('api')
