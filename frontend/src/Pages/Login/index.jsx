@@ -12,11 +12,6 @@ export default function LoginPages() {
   const [profile, setProfile] = useState({});
   const { setItem } = useCookie();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (cookieCutter.get("token")) {
-      getProfile().then((res) => setProfile(res.data));
-    }
-  }, []);
 
   const [formData, setFormData] = useState({
     email: "",
