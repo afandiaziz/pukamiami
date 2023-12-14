@@ -26,5 +26,9 @@
    "homepage": "https://github.com/afandiaziz/pukamiami-backend#readme",
    "devDependencies": {
       "concurrently": "^8.2.1"
+   },
+   "dependencies": {
+      "clsx": "^2.0.0",
+      "cookie-cutter": "^0.2.0"
    }
 }

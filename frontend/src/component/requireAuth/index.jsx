@@ -1,15 +1,25 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { Outlet } from "react-router-dom";
 
-export const RequireAuth = (allowedRoles) => {
-  const { auth } = useAuth();
-  const location = useLocation();
+import Sidebar from "../ui/sidebar";
+import { useCookie } from "../../hooks/useCookie";
+import { useEffect, useState } from "react";
 
-  return auth?.role?.name ? (
-    <Outlet />
-  ) : auth?.user ? (
-    <Navigate to="/unauthorized" state={{ from: location }} replace />
+export const RequireAuth = () => {
+  const { getItem } = useCookie();
+  const [getToken, setToken] = useState("");
+
+  useEffect(() => {
+    const token = getItem("token");
+    setToken(token);
+  }, []);
+
+  let auth = getToken;
+
+  return !auth.token ? (
+    <Sidebar>
+      <Outlet />
+    </Sidebar>
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    console.log("Not Authenticated")
   );
 };

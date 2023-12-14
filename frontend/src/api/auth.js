@@ -8,11 +8,11 @@ export function register({ email, password, confirm, phone, name, role = ROLES.u
 export function login({ email, password }) {
   return resource.post("/login", { email, password });
 }
-
 export function getProfile({ token }) {
-   return resource.get("/profile", {
-      headers: {
-         Authorization: 'Bearer ' + token
-      }
-   });
+  const bearerToken = `Bearer ${token}`;
+  return resource.get("/profile", {
+    headers: {
+      Authorization: bearerToken,
+    },
+  });
 }

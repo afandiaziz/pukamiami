@@ -3,21 +3,19 @@ import Background from "../../assets/Background.svg";
 import logo from "../../assets/logo.svg";
 // import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { login } from "../../api/auth";
+import { getProfile, login } from "../../api/auth";
 import { ROLES } from "../../config/roles";
-import cookieCutter from 'cookie-cutter';
+import cookieCutter from "cookie-cutter";
+import { useCookie } from "../../hooks/useCookie";
 
 export default function LoginPages() {
-   const navigate = useNavigate();
-   useEffect(() => {
-      if (cookieCutter.get('token')) {
-         return navigate("/")
-      }
-   }, [])
+  const [profile, setProfile] = useState({});
+  const { setItem } = useCookie();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "user@mail.com",
-    password: "123456",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -37,15 +35,18 @@ export default function LoginPages() {
       const response = await login({
         email: formData.email,
         password: formData.password,
-      })
+      });
 
-      const {role, token} = response.data.data;
-      cookieCutter.set('token', token.token);
-      if (role.name == ROLES.user) return navigate("/");
-      if (role.name == ROLES.admin) return navigate("/admin");
-      console.log(user)
-      // setAuth(user);
-   //    setTimeout(() => {}, 3000);
+      const { role, token } = response.data.data;
+      setItem("token", token.token);
+      // cookieCutter.set("token", token.token);
+      if (role.name == ROLES.user) {
+        return navigate("/user");
+      } else if (role.name == ROLES.admin) {
+        return navigate("/admin");
+      } else {
+        return navigate("/login");
+      }
     } catch (err) {
       console.log(err.response);
     }
@@ -81,7 +82,6 @@ export default function LoginPages() {
                       id="email"
                       type="email"
                       placeholder="email@gmail.com"
-                      value="user@mail.com"
                       onChange={handleChange}
                       required
                     />
@@ -98,7 +98,6 @@ export default function LoginPages() {
                       id="password"
                       type="password"
                       placeholder="******************"
-                      value={123456}
                       onChange={handleChange}
                       required
                     />
